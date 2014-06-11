@@ -92,9 +92,16 @@
 		if(this.length == 0) return this;
 
 		// support mutltiple elements
+		
 		if(this.length > 1){
-			this.each(function(){$(this).bxSlider(options)});
-			return this;
+			var sliders = new Array();
+			this.each(function(i, slider){ sliders[i] = $(this).bxSlider(options)});
+			sliders.reloadSlider = function() {
+                                $.each(sliders, function(i, slider) {
+                                    sliders[i].reloadSlider();
+                                });
+			}
+			return sliders;
 		}
 
 		// create a namespace to be used throughout the plugin
